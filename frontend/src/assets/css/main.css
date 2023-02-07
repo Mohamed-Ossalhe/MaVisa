@@ -1,0 +1,6 @@
+a.active {
+    /* bg-gradient-to-r from-primary to-secondary text-white rounded-full */
+    background: linear-gradient(to right, #004AAD,#2E4D77);
+    color: #fff;
+    border-radius: 22px;
+}
