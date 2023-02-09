@@ -30,7 +30,7 @@
         // insert single data into database
         public function insertData($data) {
             try {
-                $query = "INSERT INTO " . $this->table . " (token, nom_complet, naissance, nationalite, situation, address, type_visa, date_depart, date_arriver, type, numero_document, date_reservation)VALUES(:token, :nom_complet, :naissance, :nationalite, :situation, :address, :type_visa, :date_depart, :date_arriver, :type, :numero_document, :date_reservation)";
+                $query = "INSERT INTO " . $this->table . " (token, nom_complet, naissance, nationalite, situation, address, type_visa, date_depart, date_arriver, type, numero_document)VALUES(:token, :nom_complet, :naissance, :nationalite, :situation, :address, :type_visa, :date_depart, :date_arriver, :type, :numero_document)";
                 $stmt = $this->connect()->prepare($query);
                 $stmt->bindParam('token', $data["token"]);
                 $stmt->bindParam('nom_complet', $data["full-name"]);
@@ -43,7 +43,6 @@
                 $stmt->bindParam('date_arriver', $data["arrive-date"]);
                 $stmt->bindParam('type', $data["doc-type"]);
                 $stmt->bindParam('numero_document', $data["doc-num"]);
-                $stmt->bindParam('date_reservation', $data["reserve-date"]);
                 if($stmt->execute()) {
                     return true;
                 }else {
@@ -92,6 +91,21 @@
                     return false;
                 }
             }catch(PDOException $e) {
+                return $e->getMessage();
+            }
+        }
+        // check if user already exist
+        public function checkData($data) {
+            try {
+                $query = "SELECT * FROM " . $this->table . " WHERE nom_complet = :nom_complet";
+                $stmt = $this->connect()->prepare($query);
+                $stmt->bindParam("nom_complet", $data["full-name"]);
+                if($stmt->execute()) {
+                    return $stmt->fetch();
+                }else {
+                    return false;
+                }
+            } catch(PDOException $e) {
                 return $e->getMessage();
             }
         }
