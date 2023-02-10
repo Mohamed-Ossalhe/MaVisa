@@ -1,7 +1,7 @@
 import Header from "./components/header/header"
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import Home from "./components/home";
-import VisaApply from "./components/visaForm/visaApply";
+import Rdv from "./components/calendar/rdv";
 
 const El = ({h}) => {
   return (
@@ -21,7 +21,7 @@ function App() {
               <Route path="/rdv" element={<El h='rdv' />}  />
               <Route path="/about"  element={<El h='about' />}  />
               <Route path="/support"  element={<El h='support' />}  />
-              <Route path="/apply-for-visa"  element={<VisaApply />}  />
+              <Route path="/apply-for-visa"  element={<Rdv />}  />
             </Routes>
           </div>
         </div>
