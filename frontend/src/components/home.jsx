@@ -8,6 +8,7 @@ const Home = () => {
             <div className="container mx-auto h-full flex items-center py-12">
                 <div className="home-wrapper md:flex md:items-center md:justify-between px-12 gap-12">
                     <div className="home-text w-1/2">
+                        <h1>{sessionStorage.getItem("rdv-date")}</h1>
                         <img src={starsSvg} alt="" className="h-20"/>
                         <div className="home-text-content">
                             <h1 className="font-bold text-xl mb-4">Get You Visa RDV Without Any Come and Go.</h1>

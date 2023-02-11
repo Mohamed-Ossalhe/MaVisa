@@ -34,11 +34,19 @@
                     "depart-date" => validateData($clientData->depart_date),
                     "arrive-date" => validateData($clientData->arrival_date),
                     "doc-type" => validateData($clientData->doc_type),
-                    "doc-num" => validateData($clientData->doc_num)
+                    "doc-num" => validateData($clientData->doc_num),
+                    "rdv-date" => validateData($clientData->rdv_date),
+                    "rdv-time" => validateData($clientData->rdv_time),
+                    "rdv-status" => validateData("pending")
                 );
+                // var_dump($data);
                 $this->model("Client");
                 if(!$this->checkClient($data)) {
                     if($this->model->insertData($data)) {
+                        $userId = $this->model->getHighestId();
+                        $data += ["user-id" => validateData($userId["id"])];
+                        $this->model("RDV");
+                        $this->model->insertData($data);
                         echo json_encode(array("message" => "Client Registred Successfully!", "status" => "success"));
                     }else {
                         echo json_encode(array("message" => "Sorry Something Went Wrong!", "status" => "error"));

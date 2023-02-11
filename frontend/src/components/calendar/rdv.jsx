@@ -1,5 +1,7 @@
 import ReserveCalendar from "./ReserveCalendar"
 import asideImg from "../../assets/img/undraw_close_tab_re_4cj6.svg"
+import ReserveTime from "./ReservationTime"
+import { Link } from "react-router-dom"
 
 const Rdv = () => {
     return (
@@ -11,15 +13,12 @@ const Rdv = () => {
                 <div className="rdv-date-time h-2/3 flex items-start gap-8">
                     <div className="calendar w-1/2"><ReserveCalendar /></div>
                     <div className="time w-1/2 py-8">
-                        <label htmlFor="years" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select Appiontement Time:</label>
-                        <select id="years" size="5" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                            <option>08:00</option>
-                            <option>09:00</option>
-                            <option>10:00</option>
-                            <option>11:00</option>
-                            <option>14:00</option>
-                            <option>15:00</option>
-                        </select>
+                        <ReserveTime />
+                        <div className="rdv-btns mt-12 flex items-end justify-end">
+                            <Link to="/visa-informations">
+                                <button className="px-5 py-2 bg-gradient-to-r from-primary to-secondary hover:bg-gradient-to-l text-white rounded-sm transition-colors">Confirm</button>
+                            </Link>
+                        </div>
                     </div>
                 </div>
             </div>
