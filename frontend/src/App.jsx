@@ -2,6 +2,7 @@ import Header from "./components/header/header"
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import Home from "./components/home";
 import Rdv from "./components/calendar/rdv";
+import VisaForm from "./components/visaForm/visaForm"
 
 const El = ({h}) => {
   return (
@@ -22,6 +23,7 @@ function App() {
               <Route path="/about"  element={<El h='about' />}  />
               <Route path="/support"  element={<El h='support' />}  />
               <Route path="/apply-for-visa"  element={<Rdv />}  />
+              <Route path="/visa-informations"  element={<VisaForm />}  />
             </Routes>
           </div>
         </div>

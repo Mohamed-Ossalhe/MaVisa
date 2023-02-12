@@ -109,5 +109,19 @@
                 return $e->getMessage();
             }
         }
+        // get highest id
+        public function getHighestId() {
+            try {
+                $query = "SELECT id FROM ". $this->table ." ORDER BY id DESC LIMIT 1";
+                $stmt = $this->connect()->prepare($query);
+                if($stmt->execute()) {
+                    return $stmt->fetch();
+                }else {
+                    return false;
+                }
+            }catch(PDOException $e) {
+                return $e->getMessage();
+            }
+        }
     }
 ?>
