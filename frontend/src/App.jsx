@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import Home from "./components/home";
 import Rdv from "./components/calendar/rdv";
 import VisaForm from "./components/visaForm/visaForm"
+import CheckStatus from "./components/checkStatus/checkStatus"
 
 const El = ({h}) => {
   return (
@@ -24,6 +25,7 @@ function App() {
               <Route path="/support"  element={<El h='support' />}  />
               <Route path="/apply-for-visa"  element={<Rdv />}  />
               <Route path="/visa-informations"  element={<VisaForm />}  />
+              <Route path="/check-visa-situation"  element={<CheckStatus />}  />
             </Routes>
           </div>
         </div>

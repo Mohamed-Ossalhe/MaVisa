@@ -2,10 +2,24 @@ import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from "@fullcalendar/interaction"
 import { useState } from 'react'
+import axios from "axios"
 
-const events = [
-    { title: 'Meeting', start: new Date() }
-]
+const events = []
+const getEvents = () => {
+    axios.get("http://mavisa.ma/rdv/getAllRdvs")
+    .then(res => {
+        res.data.forEach(element => {
+            events.push({
+                start: element.rdv_date + "T" + element.rdv_time,
+                display: 'background',
+                overlap: false,
+                color: '#257e4a'
+            })
+        });
+    })
+}
+getEvents()
+console.log(events)
 
 const ReserveCalendar = () => {
     const [ dateSelected, setDateSelected ] = useState("")
@@ -22,7 +36,7 @@ const ReserveCalendar = () => {
             events={events}
             eventContent={renderEventContent}
             selectable={true}
-            dateClick={getDayClicked}
+            dateClick={(e) => getDayClicked(e)}
         />
         </div>
     )
