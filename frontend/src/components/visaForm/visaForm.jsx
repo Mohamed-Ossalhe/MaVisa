@@ -5,6 +5,7 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Link } from "react-router-dom"
+import emailjs from '@emailjs/browser';
 
 let nationalities = [...countryList().getData()]
 
@@ -55,6 +56,29 @@ const VisaForm = () => {
                     draggable: true,
                     progress: undefined,
                     theme: "light",
+                });
+                let message = {
+                    email: data.address,
+                    full_name: data.firstName + " " + data.lastName,
+                    token: response.data.token
+                }
+                emailjs.send("service_a8jflem", "template_f5527nv", message, "ggx-pfBl3mfqe7cpL")
+                .then(res => {
+                    if(res.status === 200) {
+                        toast.info("Token is Sent to Your Email", {
+                            position: "top-right",
+                            autoClose: 5000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                            theme: "light",
+                        });
+                        setTimeout(()=>{
+                            location.assign("/")
+                        },  7000)
+                    }
                 });
             }else if (response.data.status === "warn") {
                 toast.warn(response.data.message, {

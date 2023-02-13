@@ -47,7 +47,7 @@
                         $data += ["user-id" => validateData($userId["id"])];
                         $this->model("RDV");
                         $this->model->insertData($data);
-                        echo json_encode(array("message" => "Client Registred Successfully!", "status" => "success"));
+                        echo json_encode(array("message" => "Client Registred Successfully!", "status" => "success", "token" => $data["token"]));
                     }else {
                         echo json_encode(array("message" => "Sorry Something Went Wrong!", "status" => "error"));
                     }

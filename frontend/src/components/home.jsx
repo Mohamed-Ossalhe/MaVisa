@@ -16,7 +16,7 @@ const Home = () => {
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam
                             </p>
                             <div className="cta-btns mt-6 flex gap-4 items-center">
-                                <CTAbtn text="Check Visa Situation" link="/"/>
+                                <CTAbtn text="Check Visa Situation" link="/check-visa-situation"/>
                                 <CTAbtn text="Apply For Visa" link="/apply-for-visa"/>
                             </div>
                         </div>

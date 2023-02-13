@@ -97,9 +97,10 @@
         // check if user already exist
         public function checkData($data) {
             try {
-                $query = "SELECT * FROM " . $this->table . " WHERE nom_complet = :nom_complet";
+                $query = "SELECT * FROM " . $this->table . " WHERE nom_complet = :nom_complet AND address = :address";
                 $stmt = $this->connect()->prepare($query);
                 $stmt->bindParam("nom_complet", $data["full-name"]);
+                $stmt->bindParam("address", $data["address"]);
                 if($stmt->execute()) {
                     return $stmt->fetch();
                 }else {
