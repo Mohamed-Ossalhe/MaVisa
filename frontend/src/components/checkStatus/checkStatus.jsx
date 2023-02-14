@@ -13,14 +13,18 @@ const CheckStatus = () => {
         e.preventDefault()
         axios.post("http://mavisa.ma/client/getSingleClientUsingToken", data)
         .then(res => {
-            setClient(res.data)
+            if(res.data.status === "success") {
+                setClient(res.data)
+                document.querySelector("#default-search").value = ""
+            }else {
+                setClient({message: "No Document Found!"})
+            }
         })
     }
     
     const changeHandler = (e) => {
         setData({token: e.target.value})
     }
-    console.log(client)
     return (
         <div className="container mx-auto px-4">
             <div className="header font-bold text-2xl text-primary text-center">

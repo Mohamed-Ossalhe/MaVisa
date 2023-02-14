@@ -107,9 +107,9 @@
                 );
                 $this->model("Client");
                 if($this->model->deleteData($data)) {
-                    echo json_encode(array("message" => "Client Deleted Successfully!"));
+                    echo json_encode(array("message" => "Client Deleted Successfully!", "status" => true));
                 }else {
-                    echo json_encode(array("message" => "Sorry Something Went Wrong!"));
+                    echo json_encode(array("message" => "Sorry Something Went Wrong!", "status" => false));
                 }
             }
         }

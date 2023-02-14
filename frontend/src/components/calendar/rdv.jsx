@@ -7,7 +7,7 @@ const Rdv = () => {
     return (
         <div className="rdv-content max-h-screen overflow-hidden">
             <div className="container mx-auto px-24 h-full overflow-hidden">
-                <div className="header text-center pt-5 text-primary text-xl capitalize h-1/3 mb-8">
+                <div className="header pt-5 capitalize h-1/3 mb-8 header font-bold text-2xl text-primary text-center">
                     <h1>Choose Appiontement Date and Time</h1>
                 </div>
                 <div className="rdv-date-time h-2/3 flex items-start gap-8">
