@@ -19,6 +19,22 @@
                 echo json_encode($client);
             }
         }
+        // get single client data using token
+        public function getSingleClientUsingToken() {
+            if(checkMethod("POST")) {
+                $clientToken = json_decode(file_get_contents("php://input"));
+                $data = array(
+                    "token" => $clientToken->token
+                );
+                $this->model("Client");
+                if($this->model->getSingleDataUsingtoken($data)) {
+                    $clientInfo = $this->model->getSingleDataUsingtoken($data);
+                    echo json_encode(array("client" => $clientInfo, "status" => "success"));
+                }else {
+                    echo json_encode(array("message" => "Invalid Token", "status" => "error"));
+                }
+            }
+        }
         // add new client data
         public function registerClient() {
             if(checkMethod("POST")) {
@@ -91,9 +107,9 @@
                 );
                 $this->model("Client");
                 if($this->model->deleteData($data)) {
-                    echo json_encode(array("message" => "Client Deleted Successfully!"));
+                    echo json_encode(array("message" => "Client Deleted Successfully!", "status" => true));
                 }else {
-                    echo json_encode(array("message" => "Sorry Something Went Wrong!"));
+                    echo json_encode(array("message" => "Sorry Something Went Wrong!", "status" => false));
                 }
             }
         }

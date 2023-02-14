@@ -27,6 +27,21 @@
                 return $e->getMessage();
             }
         }
+        // get single data using token
+        public function getSingleDataUsingtoken($data) {
+            try {
+                $query = "SELECT * FROM " . $this->table . " JOIN `rdv` on ". $this->table .".`id` = `rdv`.`user_id` WHERE ". $this->table .".`token` = :token";
+                $stmt = $this->connect()->prepare($query);
+                $stmt->bindParam("token", $data["token"]);
+                if($stmt->execute()) {
+                    return $stmt->fetch();
+                }else {
+                    return false;
+                }
+            }catch(PDOException $e) {
+                return $e->getMessage();
+            }
+        }
         // insert single data into database
         public function insertData($data) {
             try {

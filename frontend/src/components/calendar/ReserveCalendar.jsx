@@ -4,27 +4,38 @@ import interactionPlugin from "@fullcalendar/interaction"
 import { useState } from 'react'
 import axios from "axios"
 
-const events = []
 const getEvents = () => {
+    const events = []
     axios.get("http://mavisa.ma/rdv/getAllRdvs")
     .then(res => {
-        res.data.forEach(element => {
+        // let i = 1
+        // res.data.forEach(element => {
+        //     events.push({
+        //         id: i,
+        //         title: "event",
+        //         start: element.rdv_date + "T" + element.rdv_time,
+        //         display: 'background'
+        //     })
+        //     i++;
+        // });
+        res.data.map(element => {
+            const { rdv_date, rdv_time } = element
             events.push({
-                start: element.rdv_date + "T" + element.rdv_time,
-                display: 'background',
-                overlap: false,
-                color: '#257e4a'
+                title: "event",
+                date: `${rdv_date}T${rdv_time}`,
+                display: 'background'
             })
-        });
+        })
     })
+    return events
 }
-getEvents()
-console.log(events)
+console.log(getEvents())
 
 const ReserveCalendar = () => {
     const [ dateSelected, setDateSelected ] = useState("")
-    const getDayClicked = (date) => {
-        setDateSelected(date.dateStr)
+    const getDayClicked = (e) => {
+        let date = e.dateStr
+        setDateSelected(date)
         sessionStorage.setItem("rdv-date", JSON.stringify(dateSelected))
     }
     return (
@@ -33,11 +44,19 @@ const ReserveCalendar = () => {
             plugins={[dayGridPlugin, interactionPlugin]}
             initialView='dayGridMonth'
             weekends={false}
-            events={events}
+            events={getEvents()}
             eventContent={renderEventContent}
             selectable={true}
-            dateClick={(e) => getDayClicked(e)}
-        />
+            dateClick={getDayClicked}
+            eventDisplay="background"
+            validRange={(currentDate) => {
+                let startDate = new Date(currentDate.valueOf());
+                let endDate = new Date(currentDate.valueOf());
+                startDate.setDate(startDate.getDate() - 1)
+                endDate.setDate(endDate.getDate() + 90)
+                return { start: startDate, end: endDate }
+            }}
+            />
         </div>
     )
 }
