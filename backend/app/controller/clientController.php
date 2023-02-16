@@ -73,29 +73,29 @@
             }
         }
         // update single client data
-        public function updateClient($id) {
+        public function updateClient() {
             if(checkMethod("PUT")) {
                 $clientData = json_decode(file_get_contents("php://input"));
                 $data = array(
-                    "id" => validateData($id),
-                    "token" => validateData($clientData->token),
-                    "full-name" => validateData($clientData->full_name),
-                    "birth-date" => validateData($clientData->birth_date),
+                    "id" => validateData($clientData->id),
+                    "full-name" => validateData($clientData->firstName .' '. $clientData->lastName),
+                    "birth-date" => validateData($clientData->birthDate),
                     "nationality" => validateData($clientData->nationality),
-                    "situation" => validateData($clientData->situation),
+                    "situation" => validateData($clientData->family_situation),
                     "address" => validateData($clientData->address),
                     "visa-type" => validateData($clientData->visa_type),
                     "depart-date" => validateData($clientData->depart_date),
-                    "arrive-date" => validateData($clientData->arrive_date),
+                    "arrive-date" => validateData($clientData->arrival_date),
                     "doc-type" => validateData($clientData->doc_type),
                     "doc-num" => validateData($clientData->doc_num),
-                    "reserve-date" => validateData($clientData->reserve_date)
+                    "rdv-date" => validateData($clientData->rdv_date),
+                    "rdv-time" => validateData($clientData->rdv_time)
                 );
                 $this->model("Client");
                 if($this->model->updateData($data)) {
-                    echo json_encode(array("message" => "Client Updated Successfully!"));
+                    echo json_encode(array("message" => "Client Updated Successfully!", "status" => "success"));
                 }else {
-                    echo json_encode(array("message" => "Sorry Something Went Wrong!"));
+                    echo json_encode(array("message" => "Sorry Something Went Wrong!", "status" => "error"));
                 }
             }
         }

@@ -4,6 +4,7 @@ import Home from "./components/home";
 import Rdv from "./components/calendar/rdv";
 import VisaForm from "./components/visaForm/visaForm"
 import CheckStatus from "./components/checkStatus/checkStatus"
+import EditProfile from "./components/checkStatus/editProfile";
 
 const El = ({h}) => {
   return (
@@ -26,6 +27,7 @@ function App() {
               <Route path="/apply-for-visa"  element={<Rdv />}  />
               <Route path="/visa-informations"  element={<VisaForm />}  />
               <Route path="/check-visa-situation"  element={<CheckStatus />}  />
+              <Route path="/edit-document"  element={<EditProfile />}  />
             </Routes>
           </div>
         </div>
