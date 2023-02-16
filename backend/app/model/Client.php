@@ -70,10 +70,9 @@
         // update single data
         public function updateData($data) {
             try {
-                $query = "UPDATE " . $this->table . " SET token = :token, nom_complet = :nom_complet, naissance = :naissance, nationalite = :nationalite, situation = :situation, address = :address, type_visa = :type_visa, date_depart = :date_depart, date_arriver = :date_arriver, type = :type, numero_document = :numero_document, date_reservation = :date_reservation WHERE id = :id";
+                $query = "UPDATE " . $this->table . " SET nom_complet = :nom_complet, naissance = :naissance, nationalite = :nationalite, situation = :situation, address = :address, type_visa = :type_visa, date_depart = :date_depart, date_arriver = :date_arriver, type = :type, numero_document = :numero_document WHERE id = :id";
                 $stmt = $this->connect()->prepare($query);
                 $stmt->bindParam('id', $data["id"]);
-                $stmt->bindParam('token', $data["token"]);
                 $stmt->bindParam('nom_complet', $data["full-name"]);
                 $stmt->bindParam('naissance', $data["birth-date"]);
                 $stmt->bindParam('nationalite', $data["nationality"]);
@@ -84,7 +83,6 @@
                 $stmt->bindParam('date_arriver', $data["arrive-date"]);
                 $stmt->bindParam('type', $data["doc-type"]);
                 $stmt->bindParam('numero_document', $data["doc-num"]);
-                $stmt->bindParam('date_reservation', $data["reserve-date"]);
                 if($stmt->execute()) {
                     return true;
                 }else {

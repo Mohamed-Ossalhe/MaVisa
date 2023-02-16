@@ -1,5 +1,6 @@
 import axios from 'axios'
 import React from 'react'
+import { Link } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 
@@ -10,19 +11,13 @@ const cancelRDV = (id) => {
     })
 }
 
-const edit = () => {
-    let spans = document.querySelectorAll("span.info")
-    let editBtn = document.querySelector(".edit")
-    editBtn.innerText = "Save Informations"
-    spans.forEach(span => {
-        span.setAttribute("contenteditable", "true");
-        span.focus({focusVisble: true})
-        console.log(span)
-    })
-}
-
 const Profile = ({ client }) => {
     if(!client.message) {
+        if(!localStorage.getItem("client")) {
+            localStorage.setItem("client", "{}")
+        }
+        let newData = client
+        localStorage.setItem("client", JSON.stringify(newData))
         for(let item in client) {
             const [ firstName, lastName ] = client[item].nom_complet.split(" ")
             const {id,address,date_arriver,date_depart,naissance,nationalite,numero_document,rdv_date,rdv_time,situation,status,type,type_visa} = client[item]
@@ -55,7 +50,7 @@ const Profile = ({ client }) => {
                                         <h2>VISA RDV STATUS: <span className='text-primary info'>{status}</span></h2>
                                     </div>
                                     <div className="btns mt-40">
-                                        <button type="button" onClick={edit} className="text-white bg-gradient-to-r from-primary via-blue-600 to-secondary hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 edit">Edit Informations</button>
+                                        <Link className="text-white bg-gradient-to-r from-primary via-blue-600 to-secondary hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 edit" to="/edit-document">Edit Informations</Link>
                                         <button type="button" onClick={(e) => {
                                             let id = parseInt(e.target.parentElement.parentElement.parentElement.id)
                                             cancelRDV(id)
