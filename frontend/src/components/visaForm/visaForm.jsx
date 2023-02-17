@@ -49,11 +49,11 @@ const VisaForm = () => {
                 sessionStorage.clear();
                 toast.success(response.data.message, {
                     position: "top-right",
-                    autoClose: 5000,
+                    autoClose: 3000,
                     hideProgressBar: false,
                     closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
+                    pauseOnHover: false,
+                    draggable: false,
                     progress: undefined,
                     theme: "light",
                 });
@@ -67,11 +67,11 @@ const VisaForm = () => {
                     if(res.status === 200) {
                         toast.info("Token is Sent to Your Email", {
                             position: "top-right",
-                            autoClose: 5000,
+                            autoClose: 3000,
                             hideProgressBar: false,
                             closeOnClick: true,
-                            pauseOnHover: true,
-                            draggable: true,
+                            pauseOnHover: false,
+                            draggable: false,
                             progress: undefined,
                             theme: "light",
                         });
@@ -83,22 +83,22 @@ const VisaForm = () => {
             }else if (response.data.status === "warn") {
                 toast.warn(response.data.message, {
                     position: "top-right",
-                    autoClose: 5000,
+                    autoClose: 3000,
                     hideProgressBar: false,
                     closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
+                    pauseOnHover: false,
+                    draggable: false,
                     progress: undefined,
                     theme: "light",
                 });
             }else {
                 toast.error(response.data.message, {
                     position: "top-right",
-                    autoClose: 5000,
+                    autoClose: 3000,
                     hideProgressBar: false,
                     closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
+                    pauseOnHover: false,
+                    draggable: false,
                     progress: undefined,
                     theme: "light",
                 });

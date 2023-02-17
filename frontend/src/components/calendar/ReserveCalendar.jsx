@@ -4,10 +4,12 @@ import interactionPlugin from "@fullcalendar/interaction"
 import { useState } from 'react'
 import axios from "axios"
 
+const events = []
+const eventsDisabled = []
 const getEvents = () => {
-    const events = []
     axios.get("http://mavisa.ma/rdv/getAllRdvs")
     .then(res => {
+        console.log(res)
         // let i = 1
         // res.data.forEach(element => {
         //     events.push({
@@ -21,15 +23,30 @@ const getEvents = () => {
         res.data.map(element => {
             const { rdv_date, rdv_time } = element
             events.push({
-                title: "event",
-                date: `${rdv_date}T${rdv_time}`,
-                display: 'background'
+                title: "rdv",
+                start: `${rdv_date}`,
+                display: 'background',
+                backgroundColor: '#FF0000'
             })
         })
     })
-    return events
 }
-console.log(getEvents())
+
+getEvents()
+console.log(events)
+
+const disabledDates = () => {
+    axios.get("http://mavisa.ma/rdv/getReservedRdvs")
+    .then(res => {
+        res.data.map(item => {
+            const {rdv_date, count} = item
+            eventsDisabled.push(rdv_date)
+        })
+    })
+}
+
+disabledDates()
+console.log(eventsDisabled)
 
 const ReserveCalendar = () => {
     const [ dateSelected, setDateSelected ] = useState("")
@@ -44,11 +61,22 @@ const ReserveCalendar = () => {
             plugins={[dayGridPlugin, interactionPlugin]}
             initialView='dayGridMonth'
             weekends={false}
-            events={getEvents()}
+            events={events}
             eventContent={renderEventContent}
             selectable={true}
             dateClick={getDayClicked}
             eventDisplay="background"
+            dayCellClassNames={function (day) {
+                eventsDisabled.map(item => {
+                    let date = new Date(day.date);
+                    let checkDate = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate()
+                    console.log(checkDate)
+                    if(checkDate === item) {
+                        console.log("ggg")
+                        // day.classLiast.add("bg-white")
+                    }
+                })
+            }}
             validRange={(currentDate) => {
                 let startDate = new Date(currentDate.valueOf());
                 let endDate = new Date(currentDate.valueOf());
