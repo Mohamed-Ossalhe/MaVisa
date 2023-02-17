@@ -58,14 +58,19 @@
                 // var_dump($data);
                 $this->model("Client");
                 if(!$this->checkClient($data)) {
-                    if($this->model->insertData($data)) {
-                        $userId = $this->model->getHighestId();
-                        $data += ["user-id" => validateData($userId["id"])];
-                        $this->model("RDV");
-                        $this->model->insertData($data);
-                        echo json_encode(array("message" => "Client Registred Successfully!", "status" => "success", "token" => $data["token"]));
+                    $this->model("RDV");
+                    if(!$this->model->checkRDV($data)) {
+                        if($this->model->insertData($data)) {
+                            $userId = $this->model->getHighestId();
+                            $data += ["user-id" => validateData($userId["id"])];
+                            $this->model("RDV");
+                            $this->model->insertData($data);
+                            echo json_encode(array("message" => "Client Registred Successfully!", "status" => "success", "token" => $data["token"]));
+                        }else {
+                            echo json_encode(array("message" => "Sorry Something Went Wrong!", "status" => "error"));
+                        }
                     }else {
-                        echo json_encode(array("message" => "Sorry Something Went Wrong!", "status" => "error"));
+                        echo json_encode(array("message" => "RDV date and time already taken!", "status" => "warn"));
                     }
                 }else {
                     echo json_encode(array("message" => "Client Already Exists", "status" => "warn"));
