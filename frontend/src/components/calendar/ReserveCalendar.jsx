@@ -10,16 +10,6 @@ const getEvents = () => {
     axios.get("http://mavisa.ma/rdv/getAllRdvs")
     .then(res => {
         console.log(res)
-        // let i = 1
-        // res.data.forEach(element => {
-        //     events.push({
-        //         id: i,
-        //         title: "event",
-        //         start: element.rdv_date + "T" + element.rdv_time,
-        //         display: 'background'
-        //     })
-        //     i++;
-        // });
         res.data.map(element => {
             const { rdv_date, rdv_time } = element
             events.push({
@@ -33,7 +23,7 @@ const getEvents = () => {
 }
 
 getEvents()
-console.log(events)
+// console.log(events)
 
 const disabledDates = () => {
     axios.get("http://mavisa.ma/rdv/getReservedRdvs")
@@ -46,12 +36,26 @@ const disabledDates = () => {
 }
 
 disabledDates()
-console.log(eventsDisabled)
+// console.log(eventsDisabled)
 
-const ReserveCalendar = () => {
+// a custom render function
+function renderEventContent(eventInfo) {
+    return (
+        <>
+        <b>{eventInfo.timeText}</b>
+        <i>{eventInfo.event.title}</i>
+        </>
+    )
+}
+
+const ReserveCalendar = ({times,setTimes}) => {
     const [ dateSelected, setDateSelected ] = useState("")
-    const getDayClicked = (e) => {
+    const getDayClicked = async (e) => {
         let date = e.dateStr
+        const resposne = await axios.post('http://mavisa.ma/rdv/getReservedDayTimes', date)
+        .then(({data})=>{
+                setTimes(data);
+        })
         setDateSelected(date)
         sessionStorage.setItem("rdv-date", JSON.stringify(dateSelected))
     }
@@ -70,7 +74,7 @@ const ReserveCalendar = () => {
                 eventsDisabled.map(item => {
                     let date = new Date(day.date);
                     let checkDate = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate()
-                    console.log(checkDate)
+                    // console.log(checkDate)
                     if(checkDate === item) {
                         console.log("ggg")
                         // day.classLiast.add("bg-white")
@@ -86,16 +90,6 @@ const ReserveCalendar = () => {
             }}
             />
         </div>
-    )
-}
-
-// a custom render function
-function renderEventContent(eventInfo) {
-    return (
-        <>
-        <b>{eventInfo.timeText}</b>
-        <i>{eventInfo.event.title}</i>
-        </>
     )
 }
 
