@@ -16,5 +16,17 @@
                 echo json_encode($rdvs);
             }
         }
+        // get rdvs times
+        public function getReservedDayTimes() {
+            if(checkMethod("POST")) {
+                $date = file_get_contents("php://input");
+                $data = array(
+                    "rdv-date" => $date
+                );
+                $this->model("RDV");
+                $times = $this->model->getTimes($data);
+                echo json_encode($times);
+            }
+        }
     }
 ?>

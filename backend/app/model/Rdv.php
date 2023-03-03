@@ -56,7 +56,22 @@
                 $stmt->bindParam("date", $data["rdv-date"]);
                 $stmt->bindParam("time", $data["rdv-time"]);
                 if($stmt->execute()) {
-                    return true;
+                    return $stmt->fetch();
+                }else {
+                    return false;
+                }
+            }catch(PDOException $e) {
+                return $e->getMessage();
+            }
+        }
+        // get all the unavailable times in a day
+        public function getTimes($data) {
+            try {
+                $sql = "SELECT rdv_time FROM ". $this->table ." WHERE rdv_date = :date";
+                $stmt = $this->connect()->prepare($sql);
+                $stmt->bindParam("date", $data["rdv-date"]);
+                if($stmt->execute()) {
+                    return $stmt->fetchAll();
                 }else {
                     return false;
                 }

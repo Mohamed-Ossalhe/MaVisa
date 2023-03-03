@@ -2,8 +2,10 @@ import ReserveCalendar from "./ReserveCalendar"
 import asideImg from "../../assets/img/undraw_close_tab_re_4cj6.svg"
 import ReserveTime from "./ReservationTime"
 import { Link } from "react-router-dom"
+import { useState } from "react"
 
 const Rdv = () => {
+    const [times, setTimes] = useState([]);
     return (
         <div className="rdv-content max-h-screen overflow-hidden">
             <div className="container mx-auto px-24 h-full overflow-hidden">
@@ -11,9 +13,11 @@ const Rdv = () => {
                     <h1>Choose Appiontement Date and Time</h1>
                 </div>
                 <div className="rdv-date-time h-2/3 flex items-start gap-8">
-                    <div className="calendar w-1/2"><ReserveCalendar /></div>
+                    <div className="calendar w-1/2">
+                        <ReserveCalendar times={times} setTimes={setTimes}/>
+                    </div>
                     <div className="time w-1/2 py-8">
-                        <ReserveTime />
+                        <ReserveTime times={times}/>
                         <div className="rdv-btns mt-12 flex items-end justify-end">
                             <Link to="/visa-informations">
                                 <button className="px-5 py-2 bg-gradient-to-r from-primary to-secondary hover:bg-gradient-to-l text-white rounded-sm transition-colors">Confirm</button>
