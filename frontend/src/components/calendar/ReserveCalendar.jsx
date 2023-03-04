@@ -16,7 +16,7 @@ const getEvents = () => {
                 title: "rdv",
                 start: `${rdv_date}`,
                 display: 'background',
-                backgroundColor: '#FF0000'
+                backgroundColor: '#004AAD'
             })
         })
     })
@@ -36,7 +36,7 @@ const disabledDates = () => {
 }
 
 disabledDates()
-// console.log(eventsDisabled)
+console.log(eventsDisabled)
 
 // a custom render function
 function renderEventContent(eventInfo) {
@@ -49,7 +49,7 @@ function renderEventContent(eventInfo) {
 }
 
 const ReserveCalendar = ({times,setTimes}) => {
-    const [ dateSelected, setDateSelected ] = useState("")
+    const [ dateSelected, setDateSelected ] = useState()
     const getDayClicked = async (e) => {
         let date = e.dateStr
         const resposne = await axios.post('http://mavisa.ma/rdv/getReservedDayTimes', date)
@@ -71,23 +71,23 @@ const ReserveCalendar = ({times,setTimes}) => {
             dateClick={getDayClicked}
             eventDisplay="background"
             dayCellClassNames={function (day) {
-                eventsDisabled.map(item => {
+                eventsDisabled.map((item) => {
                     let date = new Date(day.date);
                     let checkDate = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate()
-                    // console.log(checkDate)
+                    console.log(item)
                     if(checkDate === item) {
                         console.log("ggg")
-                        // day.classLiast.add("bg-white")
+                        // day.classLiast.add("bg-black")
                     }
                 })
             }}
-            validRange={(currentDate) => {
-                let startDate = new Date(currentDate.valueOf());
-                let endDate = new Date(currentDate.valueOf());
-                startDate.setDate(startDate.getDate() - 1)
-                endDate.setDate(endDate.getDate() + 90)
-                return { start: startDate, end: endDate }
-            }}
+            // validRange={(currentDate) => {
+            //     let startDate = new Date(currentDate.valueOf());
+            //     let endDate = new Date(currentDate.valueOf());
+            //     startDate.setDate(startDate.getDate() - 1)
+            //     endDate.setDate(endDate.getDate() + 90)
+            //     return { start: startDate, end: endDate }
+            // }}
             />
         </div>
     )
