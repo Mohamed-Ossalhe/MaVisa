@@ -13,7 +13,7 @@ const getEvents = () => {
         res.data.map(element => {
             const { rdv_date, rdv_time } = element
             events.push({
-                title: "rdv",
+                title: "",
                 start: `${rdv_date}`,
                 display: 'background',
                 backgroundColor: '#004AAD'
@@ -81,13 +81,13 @@ const ReserveCalendar = ({times,setTimes}) => {
                     }
                 })
             }}
-            // validRange={(currentDate) => {
-            //     let startDate = new Date(currentDate.valueOf());
-            //     let endDate = new Date(currentDate.valueOf());
-            //     startDate.setDate(startDate.getDate() - 1)
-            //     endDate.setDate(endDate.getDate() + 90)
-            //     return { start: startDate, end: endDate }
-            // }}
+            validRange={(currentDate) => {
+                let startDate = new Date(currentDate.valueOf());
+                let endDate = new Date(currentDate.valueOf());
+                startDate.setDate(startDate.getDate() - 1)
+                endDate.setDate(endDate.getDate() + 90)
+                return { start: startDate, end: endDate }
+            }}
             />
         </div>
     )
