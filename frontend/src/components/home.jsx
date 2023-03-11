@@ -1,8 +1,10 @@
 import CTAbtn from './CTAbtn'
 import heroSvg from '../assets/img/hero-svg2.svg';
 import starsSvg from '../assets/img/svgsvg.svg';
+import checkUrl from '../helpers/checkUrl';
 
 const Home = () => {
+    checkUrl("/edit-document");
     return (
         <div className="home h-full overflow-hidden">
             <div className="container mx-auto h-full flex items-center py-12">
