@@ -1,9 +1,11 @@
 import axios from "axios"
 import Profile from "./profile"
 import { useState } from "react"
+import checkUrl from "../../helpers/checkUrl"
 
 const CheckStatus = () => {
-    const [ client, setClient ] = useState({})
+    checkUrl("/edit-document");
+    const [ client, setClient ] = useState(null)
     const [ data, setData ] = useState(
         {
             token: ""
@@ -12,13 +14,12 @@ const CheckStatus = () => {
     const getUserData = (e) => {
         e.preventDefault()
         axios.post("http://mavisa.ma/client/getSingleClientUsingToken", data)
-        .then(res => {
-            console.log(res.data)
-            if(res.data.status === "success") {
-                setClient(res.data)
+        .then(({data}) => {
+            if(data.status === "success") {
+                setClient(data.client)
                 document.querySelector("#default-search").value = ""
             }else {
-                setClient({message: "No Document Found!"})
+                setClient({message: "No Document Existe With this Token!"})
             }
         })
     }
@@ -41,7 +42,13 @@ const CheckStatus = () => {
                 </form>
             </div>
             <div className="profile-info">
-                <Profile client={client}/>
+                {client ? <Profile client={client}/> : <div className="flex p-4 mb-4 text-sm text-blue-800 border border-blue-300 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400 dark:border-blue-800" role="alert">
+                    <svg aria-hidden="true" className="flex-shrink-0 inline w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd"></path></svg>
+                    <span className="sr-only">Info</span>
+                    <div>
+                        <span className="font-medium">MaVisa!</span> Please Make sure you enter your token in the input field.
+                    </div>
+                </div>}
             </div>
         </div>
     )
