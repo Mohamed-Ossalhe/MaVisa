@@ -74,7 +74,6 @@ const ReserveCalendar = ({times,setTimes}) => {
                 eventsDisabled.map((item) => {
                     let date = new Date(day.date);
                     let checkDate = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate()
-                    console.log(item)
                     if(checkDate === item) {
                         console.log("ggg")
                         // day.classLiast.add("bg-black")
@@ -84,7 +83,7 @@ const ReserveCalendar = ({times,setTimes}) => {
             validRange={(currentDate) => {
                 let startDate = new Date(currentDate.valueOf());
                 let endDate = new Date(currentDate.valueOf());
-                startDate.setDate(startDate.getDate() - 1)
+                startDate.setDate(startDate.getDate())
                 endDate.setDate(endDate.getDate() + 90)
                 return { start: startDate, end: endDate }
             }}
